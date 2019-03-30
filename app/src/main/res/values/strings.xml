@@ -2,4 +2,5 @@
     <string name="app_name">zuifuli_jd</string>
     <string name="action_settings">Settings</string>
     <string name="action_login">Login</string>
+    <string name="title">京东卡</string>
 </resources>

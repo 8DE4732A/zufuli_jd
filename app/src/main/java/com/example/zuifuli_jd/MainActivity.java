@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DrawableUtils;
 import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Gravity;
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,9 +68,8 @@ public class MainActivity extends AppCompatActivity {
 
         myWebView.loadUrl("https://h5.zuifuli.com/thirdcard");
 
-
-
-
+        TextClock textClock = findViewById(R.id.text_clock);
+        textClock.setFormat24Hour("HH:mm:ss");
 
     }
 
