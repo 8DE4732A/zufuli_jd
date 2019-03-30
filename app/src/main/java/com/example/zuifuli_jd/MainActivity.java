@@ -88,6 +88,9 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            myWebView.loadUrl("https://h5.zuifuli.com/login?redirectUrl=https%3A%2F%2Fh5.zuifuli.com%2Fthirdcard");
+
+
             return true;
         }
 
