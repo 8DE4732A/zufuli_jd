@@ -1,5 +1,7 @@
 package com.example.zuifuli_jd;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -7,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DrawableUtils;
 import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -22,6 +25,7 @@ import android.widget.Toast;
 import static android.view.KeyEvent.KEYCODE_BACK;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "MainActivity";
 
     private WebView myWebView;
 
@@ -43,11 +47,13 @@ public class MainActivity extends AppCompatActivity {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
                 if(!flag) {
-                    myWebView.loadUrl("javascript:function buy_jd(type, sum) {var sum = sum || 3;var type = type || 20107;var request_data = {cardDefId: \"5\",skus: [{skuId: type,quantity: 5}]};var xhr = new XMLHttpRequest();xhr.open('GET', 'https://api.zuifuli.com/api/product/v1/card/defs/5/detail', false);xhr.withCredentials = true;xhr.send(null);var response = JSON.parse(xhr.response);if(response[\"code\"] !== \"0\") {Android.showToast(\">>>\" + xhr.response + \"<<<<\");} else {if(response.result.skus[0].stockQuantity > 0) {xhr.open('POST', 'https://api.zuifuli.com/api/product/v1/card/buy', false);xhr.withCredentials = true;xhr.setRequestHeader('Content-Type', 'application/json');xhr.send(JSON.stringify(request_data));Android.showToast(\">>>\" + xhr.response + \"<<<<\");} else {Android.showToast(\">>>query result is 0<<<<\");}}}");
+                    myWebView.loadUrl("javascript:function buy_jd(type, sum) {var sum = sum || 5;var type = type || 20107;var request_data = {cardDefId: \"5\",skus: [{skuId: type,quantity: sum}]};var xhr = new XMLHttpRequest();xhr.open('GET', 'https://api.zuifuli.com/api/product/v1/card/defs/5/detail', false);xhr.withCredentials = true;xhr.send(null);var response = JSON.parse(xhr.response);if(response[\"code\"] !== \"0\") {Android.showToast(\">>>\" + xhr.response + \"<<<<\");} else {if(response.result.skus[type - 20107].stockQuantity > 0) {xhr.open('POST', 'https://api.zuifuli.com/api/product/v1/card/buy', false);xhr.withCredentials = true;xhr.setRequestHeader('Content-Type', 'application/json');xhr.send(JSON.stringify(request_data));Android.showToast(\">>>\" + xhr.response + \"<<<<\");} else {Android.showToast(\">>>query result is 0<<<<\");}}}");
                     flag = true;
                 }
+                SharedPreferences perf = getSharedPreferences("config", MODE_PRIVATE);
 
-                myWebView.loadUrl("javascript:buy_jd()");
+//                Log.i(TAG, "buy: " + Constant.valueCodeArray[perf.getInt("value", 0)] + "  " + Constant.countArray[perf.getInt("num", 0)]);
+                myWebView.loadUrl("javascript:buy_jd(" + Constant.valueCodeArray[perf.getInt("value", 0)] + ", " + Constant.countArray[perf.getInt("num", 0)] + ")");
             }
         });
         myWebView = (WebView) findViewById(R.id.web_view);
@@ -88,10 +94,11 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_login) {
             myWebView.loadUrl("https://h5.zuifuli.com/login?redirectUrl=https%3A%2F%2Fh5.zuifuli.com%2Fthirdcard");
-
-
+            return true;
+        } else if(id == R.id.action_settings) {
+            startActivity(new Intent(this, Main2Activity.class));
             return true;
         }
 
