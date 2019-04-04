@@ -50,7 +50,7 @@ public class Main2Activity extends AppCompatActivity {
         start.setText(perf.getString("start", "20:59:55"));
         end.setText(perf.getString("end", "21:00:15"));
 
-        if (!s.getShowText()) {
+        if (!s.isChecked()) {
             ms.setEnabled(false);
             start.setEnabled(false);
             end.setEnabled(false);
@@ -95,7 +95,7 @@ public class Main2Activity extends AppCompatActivity {
 
         editor.putInt("num", countSpinner.getSelectedItemPosition());
         editor.putInt("value", valueSpinner.getSelectedItemPosition());
-        editor.putBoolean("switch", s.getShowText());
+        editor.putBoolean("switch", s.isChecked());
         editor.putString("ms", ms.getText().toString());
         editor.putString("start", start.getText().toString());
         editor.putString("end", end.getText().toString());
