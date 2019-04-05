@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 
 public class WebAppInterface {
-    Context mContext;
+    MainActivity mContext;
 
     TextView textView;
 
@@ -21,7 +21,7 @@ public class WebAppInterface {
     private long count  = 0;
 
     /** Instantiate the interface and set the context */
-    WebAppInterface(Context c, TextView textView) {
+    WebAppInterface(MainActivity c, TextView textView) {
         mContext = c;
         this.textView = textView;
     }
@@ -39,6 +39,11 @@ public class WebAppInterface {
         if(messageQueue.size() > 300) {
             messageQueue = messageQueue.subList(messageQueue.size() - 200, messageQueue.size());
         }
+    }
+
+    @JavascriptInterface
+    public void setSuccess() {
+        mContext.stopTimer();
     }
 
 }
