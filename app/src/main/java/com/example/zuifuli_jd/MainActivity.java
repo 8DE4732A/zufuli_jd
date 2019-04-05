@@ -72,6 +72,13 @@ public class MainActivity extends AppCompatActivity {
 
                             Message message = mHandler.obtainMessage(1);
                             mHandler.sendMessageDelayed(message, ms);
+                        } else {
+                            if(currentTimeMillis < startTime) {
+                                Message message = mHandler.obtainMessage(1);
+                                mHandler.sendMessageDelayed(message, startTime - currentTimeMillis);
+                                Log.i(TAG, "start after!!");
+                                Toast.makeText(getApplicationContext(), "将于" + (startTime - currentTimeMillis) + "ms之后开始", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
                     break;
